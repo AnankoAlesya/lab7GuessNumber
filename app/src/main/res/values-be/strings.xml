@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">lab4</string>
+    <string name="msg_show_str">Адгадай!</string>
+    <string name="hint_show_str">Загадан двухзначны лік.</string>
+    <string name="guess_str">Адгадаць</string>
+    <string name="attempts_left_str">5</string>
+    <string name="restart_str">Занава</string>
+    <string name="guessed_str">Адгадана!</string>
+    <string name="wishYou">Віншую!</string>
+    <string name="defeat">Вы прайгралі!</string>
+    <string name="hint_more">Загаданы лік большы за твой</string>
+    <string name="hint_less">Загаданы лік меншы за твой</string>
+</resources>
