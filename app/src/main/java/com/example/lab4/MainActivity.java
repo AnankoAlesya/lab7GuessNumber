@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,43 +27,43 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         comp_num = GuessNum.rndCompNum();
+
+        binding.numUserTxt.requestFocus();
+        showSoftKeyboard(binding.numUserTxt);
+
         Context context = getApplicationContext();
+
         View.OnClickListener clckLstnr = new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
+                int attemptsLeft = Integer.parseInt(binding.attemptsLeftTxt.getText().toString());
+                String textNumber = binding.numUserTxt.getText().toString();
+                if (textNumber.equals("")) return;
+
+                int number = Integer.parseInt(binding.numUserTxt.getText().toString());
+
+                if (attemptsLeft > 0)
                 {
-                    int attemptsLeft = Integer.parseInt(binding.attemptsLeftTxt.getText().toString());
-                    int number = Integer.parseInt(binding.numUserTxt.getText().toString());
-
-                    if (attemptsLeft > 0)
+                    if (number == comp_num)
                     {
-                        if (number == comp_num)
-                        {
-                            binding.guessBtn.setText(R.string.guessed_str);
-                            binding.guessBtn.setClickable(false);
-                            Toast t = Toast.makeText(context, R.string.wishYou, Toast.LENGTH_LONG);
-                            t.show();
-                        }
-                        else if (number < comp_num)
-                        {
-                            binding.hintShowTxt.setText(R.string.hint_more);
-                        }
-                        else if (number > comp_num)
-                        {
-                            binding.hintShowTxt.setText(R.string.hint_less);
-                        }
-
-                        attemptsLeft--;
-                        binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
+                        binding.guessBtn.setText(R.string.guessed_str);
+                        binding.guessBtn.setClickable(false);
+                        showMessage(context, R.string.wishYou);
+                        return;
                     }
+                    else if (number < comp_num) binding.hintShowTxt.setText(R.string.hint_more);
+                    else binding.hintShowTxt.setText(R.string.hint_less);
 
-                    if (attemptsLeft == 0)
-                    {
-                        binding.hintShowTxt.setText(R.string.defeat);
-                        Toast t = Toast.makeText(context, R.string.defeat, Toast.LENGTH_LONG);
-                        t.show();
-                    }
+                    attemptsLeft--;
+                    binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
+                }
+
+                if (attemptsLeft == 0)
+                {
+                    binding.hintShowTxt.setText(R.string.defeat);
+                    binding.guessBtn.setClickable(false);
+                    showMessage(context, R.string.defeat);
                 }
             }
         };
@@ -76,5 +78,18 @@ public class MainActivity extends AppCompatActivity {
         binding.hintShowTxt.setText(R.string.hint_show_str);
         binding.guessBtn.setClickable(true);
         binding.numUserTxt.setText("");
+    }
+
+    public void showSoftKeyboard(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = getSystemService(InputMethodManager.class);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    public void showMessage(Context context, int message)
+    {
+        Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        t.show();
     }
 }

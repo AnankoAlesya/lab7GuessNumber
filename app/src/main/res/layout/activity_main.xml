@@ -41,6 +41,7 @@
         android:id="@+id/num_user_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLength="2"
         android:ems="10"
         android:inputType="number" />
 
