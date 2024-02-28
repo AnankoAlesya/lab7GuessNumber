@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         binding.guessBtn.setText(R.string.guessed_str);
                         binding.guessBtn.setClickable(false);
-                        showMessage(context, R.string.wishYou);
+                        String message = getResources().getString(R.string.wishYou);
+                        showMessage(context, message);
                         return;
                     }
                     else if (number < comp_num) binding.hintShowTxt.setText(R.string.hint_more);
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     binding.hintShowTxt.setText(R.string.defeat);
                     binding.guessBtn.setClickable(false);
-                    showMessage(context, R.string.defeat);
+                    String message = getResources().getString(R.string.defeat);
+                    showMessage(context, message + " " + comp_num);
                 }
             }
         };
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showMessage(Context context, int message)
+    public void showMessage(Context context, String message)
     {
         Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
         t.show();
