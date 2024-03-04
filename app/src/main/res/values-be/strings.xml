@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">lab4</string>
+    <string name="app_name">Загадка</string>
     <string name="msg_show_str">Адгадай!</string>
-    <string name="hint_show_str">Загадан двухзначны лік.</string>
     <string name="guess_str">Адгадаць</string>
     <string name="attempts_left_str">5</string>
     <string name="restart_str">Занава</string>
@@ -11,4 +10,11 @@
     <string name="defeat">Вы прайгралі!</string>
     <string name="hint_more">Загаданы лік большы за твой</string>
     <string name="hint_less">Загаданы лік меншы за твой</string>
+    <string name="settings">Дыяпазон ад...</string>
+    <string name="ok">Да</string>
+    <string name="cancel">Нет</string>
+    <string name="choose_range_number">Выбраць дыяпазон ліку</string>
+    <string name="hint_show_str_2">Задуман двухзначны лік.</string>
+    <string name="hint_show_str_3">Задуман трохзначны лік.</string>
+    <string name="hint_show_str_4">Задуман чатырохзначны лік.</string>
 </resources>

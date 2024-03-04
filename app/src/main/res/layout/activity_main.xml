@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:text="@string/hint_show_str"
+        android:text="@string/hint_show_str_2"
         android:textColor="@color/dark_purple"
         android:textSize="20sp" />
 
@@ -46,6 +46,14 @@
         android:inputType="number" />
 
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:onClick="chooseGameMode"
+        android:text="@string/choose_range_number"
+        android:textSize="20sp" />
+
+    <Button
         android:id="@+id/guess_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,4 +69,5 @@
         android:onClick="restart"
         android:text="@string/restart_str"
         android:textSize="20sp" />
+
 </LinearLayout>

@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">lab4</string>
+    <string name="app_name">Загадка</string>
     <string name="msg_show_str">Отгадай!</string>
-    <string name="hint_show_str">Задумано двузначное число.</string>
+    <string name="hint_show_str_2">Задумано двузначное число.</string>
+    <string name="hint_show_str_3">Задумано трёхзначное число.</string>
+    <string name="hint_show_str_4">Задумано четырёхзначное число.</string>
     <string name="guess_str">Отгадать</string>
     <string name="attempts_left_str">5</string>
     <string name="restart_str">Заново</string>
@@ -10,4 +12,13 @@
     <string name="defeat">Вы проиграли!</string>
     <string name="hint_more">Загаданное число больше твоего.</string>
     <string name="hint_less">Загаданное число меньше твоего.</string>
+    <string name="choose_range_number">Выбрать диапазон числа</string>
+    <string name="settings">Диапазон от...</string>
+    <string name="ok">Да</string>
+    <string name="cancel">Нет</string>
+    <string-array name="diaps_array">
+        <item>10-99</item>
+        <item>100-999</item>
+        <item>1000-9999</item>
+    </string-array>
 </resources>
