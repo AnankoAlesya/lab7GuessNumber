@@ -20,9 +20,11 @@ import com.example.lab4.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    int comp_num = 0; //генеріромое чісло
+    int comp_num = 0; //генерирумое число
 
-    int attemptsLeft = 0; //количесвто попыток
+    int attemptsLeft = 0; //количество попыток
+
+    int gameMode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.numUserTxt.requestFocus();
         showSoftKeyboard(binding.numUserTxt);
+
+        attemptsLeft = 5;
+        binding.hintShowTxt.setText(R.string.hint_show_str_2);
+        comp_num = GuessNum.rndCompNum(10, 99);
 
         Context context = getApplicationContext();
 
@@ -79,10 +85,29 @@ public class MainActivity extends AppCompatActivity {
     public void restart(View view) {
         //comp_num = GuessNum.rndCompNum();
         binding.guessBtn.setText(R.string.guess_str);
-        binding.attemptsLeftTxt.setText(R.string.attempts_left_str);
-        //binding.hintShowTxt.setText(R.string.hint_show_str);
         binding.guessBtn.setClickable(true);
         binding.numUserTxt.setText("");
+
+        if (gameMode == 0)
+        {
+            attemptsLeft = 5;
+            binding.hintShowTxt.setText(R.string.hint_show_str_2);
+            comp_num = GuessNum.rndCompNum(10, 99);
+        }
+        else if (gameMode == 1)
+        {
+            attemptsLeft = 7;
+            binding.hintShowTxt.setText(R.string.hint_show_str_3);
+            comp_num = GuessNum.rndCompNum(100, 999);
+        }
+        else
+        {
+            attemptsLeft = 10;
+            binding.hintShowTxt.setText(R.string.hint_show_str_4);
+            comp_num = GuessNum.rndCompNum(1000, 9999);
+        }
+
+        binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
     }
 
     public void showSoftKeyboard(View view) {
@@ -97,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
         Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
         t.show();
     }
-    Boolean flag = false;
+
     public void chooseGameMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.settings);
 
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        /*builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int id) {
                 flag = true;
@@ -114,29 +139,35 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
-        });
-        builder.setItems(R.array.diaps_array, new DialogInterface.OnClickListener() {
+        });*/
+
+        builder.setSingleChoiceItems(R.array.diaps_array, 0, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0)
                 {
                     attemptsLeft = 5;
                     binding.hintShowTxt.setText(R.string.hint_show_str_2);
                     comp_num = GuessNum.rndCompNum(10, 99);
+                    gameMode = 0;
                 }
                 else if (which == 1)
                 {
                     attemptsLeft = 7;
                     binding.hintShowTxt.setText(R.string.hint_show_str_3);
                     comp_num = GuessNum.rndCompNum(100, 999);
+                    gameMode = 1;
                 }
                 else
                 {
                     attemptsLeft = 10;
                     binding.hintShowTxt.setText(R.string.hint_show_str_4);
                     comp_num = GuessNum.rndCompNum(1000, 9999);
+                    gameMode = 2;
                 }
 
                 binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
+                binding.numUserTxt.setText("");
+                dialog.dismiss();
             }
         });
 
