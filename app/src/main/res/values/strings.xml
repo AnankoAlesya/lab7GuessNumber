@@ -16,6 +16,7 @@
     <string name="settings">Диапазон от...</string>
     <string name="ok">Да</string>
     <string name="cancel">Нет</string>
+    <string name="clear">Очистить</string>
     <string-array name="diaps_array">
         <item>10-99</item>
         <item>100-999</item>
