@@ -22,4 +22,6 @@
         <item>100-999</item>
         <item>1000-9999</item>
     </string-array>
+    <string name="settingsMenu">Настройки</string>
+    <string name="aboutDeveloper">О разработчике</string>
 </resources>

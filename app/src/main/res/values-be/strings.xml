@@ -18,4 +18,6 @@
     <string name="hint_show_str_3">Задуман трохзначны лік.</string>
     <string name="hint_show_str_4">Задуман чатырохзначны лік.</string>
     <string name="clear">Ачысціць</string>
+    <string name="aboutDeveloper">Аб распрацоўшчыку</string>
+    <string name="settingsMenu">" Наладкі"</string>
 </resources>
