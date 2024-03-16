@@ -1,5 +1,6 @@
 package com.example.lab4;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +30,44 @@ public class MainActivity extends AppCompatActivity {
 
     int gameMode = 0;
 
+    private static final String LOG_TAG = MainActivity.class.getSimpleName() + "1";
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(LOG_TAG, "Destroy");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(LOG_TAG, "Stop");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(LOG_TAG, "Resume");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(LOG_TAG, "Save");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(LOG_TAG, "Restart");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(LOG_TAG, "Start");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         attemptsLeft = 5;
         binding.hintShowTxt.setText(R.string.hint_show_str_2);
         comp_num = GuessNum.rndCompNum(10, 99);
+        Log.i (LOG_TAG, "Угадай число.onCreate()");
     }
 
     public void restart(View view) {
