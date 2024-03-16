@@ -24,11 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    int comp_num = 0; //генерирумое число
+    int comp_num = 0;
 
-    int attemptsLeft = 0; //количество попыток
+    int attemptsLeft = 0;
 
     int gameMode = 0;
+
+    static final String STATE_NUMBER = "CompNum";
+    static final String STATE_ATTEMPTS = "AttemptsLeft";
+    static final String STATE_GAME_MODE = "GameMode";
+    static final String STATE_MESSAGE_TXT = "HintShowTxt";
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName() + "1";
 
@@ -52,8 +57,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(STATE_NUMBER, comp_num);
+        outState.putInt(STATE_ATTEMPTS, attemptsLeft);
+        outState.putInt(STATE_GAME_MODE, gameMode);
+        outState.putString(STATE_MESSAGE_TXT, binding.hintShowTxt.getText().toString());
         super.onSaveInstanceState(outState);
         Log.i(LOG_TAG, "Save");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        comp_num = savedInstanceState.getInt(STATE_NUMBER);
+        attemptsLeft = savedInstanceState.getInt(STATE_ATTEMPTS);
+        gameMode = savedInstanceState.getInt(STATE_GAME_MODE);
+
+        binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
+        binding.hintShowTxt.setText(savedInstanceState.getString(STATE_MESSAGE_TXT));
+
+        if (attemptsLeft == 0) binding.guessBtn.setClickable(false);
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
