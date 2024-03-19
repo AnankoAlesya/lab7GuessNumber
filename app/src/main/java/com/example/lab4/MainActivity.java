@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -97,7 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        showMessage(getApplicationContext(), "ffff");
+        if (item.getItemId() == R.id.settingMenuItem) openWindowChooseGameMode();
+
+        if (item.getItemId() == R.id.aboutMenuItem)
+        {
+            /*
+            Intent intent = new Intent(MainActivity.this, AboutActivity.Class);
+            startActivity(intent);*/
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -159,6 +168,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chooseGameMode(View view) {
+        openWindowChooseGameMode();
+    }
+
+    private void openWindowChooseGameMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
         builder.setTitle(R.string.settings);
 
