@@ -24,4 +24,8 @@
     </string-array>
     <string name="settingsMenu">Настройки</string>
     <string name="aboutDeveloper">О разработчике</string>
+    <string name="about_me">Обо мне</string>
+    <string name="full_name">Коноз Вера Григорьевна</string>
+    <string name="date_of_birth">Дата рождения: 27.05.2004</string>
+    <string name="hobby">Хобби: занятия пауэрлифтингом в течение 3-ёх лет, написание книги и стихотворений.</string>
 </resources>

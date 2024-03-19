@@ -20,4 +20,8 @@
     <string name="clear">Ачысціць</string>
     <string name="aboutDeveloper">Аб распрацоўшчыку</string>
     <string name="settingsMenu">" Наладкі"</string>
+    <string name="about_me">Пра мяне</string>
+    <string name="full_name">Коназ Вера Рыгораўна</string>
+    <string name="date_of_birth">Дата нараджэння: 27.05.2004</string>
+    <string name="hobby">Любімы занятак: Заняткі паўэрліфтынгам на працягу 3-ох гадоў, напісанне кнігі і вершаў.</string>
 </resources>

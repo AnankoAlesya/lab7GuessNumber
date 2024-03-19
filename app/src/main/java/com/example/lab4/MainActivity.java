@@ -102,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.aboutMenuItem)
         {
-            /*
-            Intent intent = new Intent(MainActivity.this, AboutActivity.Class);
-            startActivity(intent);*/
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
         }
 
         return super.onOptionsItemSelected(item);
