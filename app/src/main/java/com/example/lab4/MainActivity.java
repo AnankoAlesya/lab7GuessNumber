@@ -168,10 +168,6 @@ public class MainActivity extends AppCompatActivity {
         t.show();
     }
 
-    public void chooseGameMode(View view) {
-        openWindowChooseGameMode();
-    }
-
     private void openWindowChooseGameMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
         builder.setTitle(R.string.settings);

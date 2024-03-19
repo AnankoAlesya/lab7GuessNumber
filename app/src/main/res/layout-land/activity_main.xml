@@ -58,14 +58,6 @@
             android:ems="10"
             android:textSize="20sp" />
 
-        <Button
-            android:layout_width="314dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:onClick="chooseGameMode"
-            android:text="@string/choose_range_number"
-            android:textSize="20sp" />
-
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

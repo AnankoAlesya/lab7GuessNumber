@@ -13,7 +13,6 @@
     <string name="settings">Дыяпазон ад...</string>
     <string name="ok">Да</string>
     <string name="cancel">Нет</string>
-    <string name="choose_range_number">Выбраць дыяпазон ліку</string>
     <string name="hint_show_str_2">Задуман двухзначны лік.</string>
     <string name="hint_show_str_3">Задуман трохзначны лік.</string>
     <string name="hint_show_str_4">Задуман чатырохзначны лік.</string>

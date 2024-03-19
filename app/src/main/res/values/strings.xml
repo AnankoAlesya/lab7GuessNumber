@@ -12,7 +12,6 @@
     <string name="defeat">Вы проиграли!</string>
     <string name="hint_more">Загаданное число больше твоего.</string>
     <string name="hint_less">Загаданное число меньше твоего.</string>
-    <string name="choose_range_number">Выбрать диапазон числа</string>
     <string name="settings">Диапазон от...</string>
     <string name="ok">Да</string>
     <string name="cancel">Нет</string>
