@@ -5,7 +5,7 @@
     <string name="guess_str">Адгадаць</string>
     <string name="attempts_left_str">5</string>
     <string name="restart_str">Занава</string>
-    <string name="guessed_str">Адгадана!</string>
+    <string name="guessed_str">Адгадана</string>
     <string name="wishYou">Віншую!</string>
     <string name="defeat">Вы прайгралі!</string>
     <string name="hint_more">Загаданы лік большы за твой</string>
@@ -23,4 +23,14 @@
     <string name="full_name">Коназ Вера Рыгораўна</string>
     <string name="date_of_birth">Дата нараджэння: 27.05.2004</string>
     <string name="hobby">Любімы занятак: Заняткі паўэрліфтынгам на працягу 3-ох гадоў, напісанне кнігі і вершаў.</string>
+    <string name="copy_text">Скапіяваць</string>
+    <string name="inset_text">Уставіць</string>
+    <string name="copy_message">Дадзеныя паспяхова захаваны</string>
+    <string name="share_info">Падзяліцца</string>
+    <string name="attempts_left_message">Колькасць спробаў:</string>
+    <string name="guess_num_message">Загаданы лік:</string>
+    <string name="result_message">Вынік:</string>
+    <string name="result_message_succesfully">Вы выйгралі!</string>
+    <string name="result_message_defeat">Вы прайгралі!</string>
+    <string name="save_info">Захаваць</string>
 </resources>

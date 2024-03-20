@@ -7,7 +7,7 @@
     <string name="guess_str">Отгадать</string>
     <string name="attempts_left_str">5</string>
     <string name="restart_str">Заново</string>
-    <string name="guessed_str">Отгадано!</string>
+    <string name="guessed_str">Отгадано</string>
     <string name="wishYou">Поздравляю!</string>
     <string name="defeat">Вы проиграли!</string>
     <string name="hint_more">Загаданное число больше твоего.</string>
@@ -27,4 +27,14 @@
     <string name="full_name">Коноз Вера Григорьевна</string>
     <string name="date_of_birth">Дата рождения: 27.05.2004</string>
     <string name="hobby">Хобби: занятия пауэрлифтингом в течение 3-ёх лет, написание книги и стихотворений.</string>
+    <string name="copy_text">Скопировать</string>
+    <string name="inset_text">Вставить</string>
+    <string name="copy_message">Данные успешно сохранены</string>
+    <string name="share_info">Поделиться</string>
+    <string name="attempts_left_message">Количество попыток:</string>
+    <string name="guess_num_message">Загаданное число:</string>
+    <string name="result_message">Результат:</string>
+    <string name="result_message_succesfully">Вы выйграли!</string>
+    <string name="result_message_defeat">Вы пройграли!</string>
+    <string name="save_info">Сохранить</string>
 </resources>

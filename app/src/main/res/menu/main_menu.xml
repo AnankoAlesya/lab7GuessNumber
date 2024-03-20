@@ -2,6 +2,22 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/save_info"
+        android:icon="@drawable/save_icon_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/save_info"
+        app:showAsAction="ifRoom"
+        android:enabled="false"/>
+    <item
+        android:id="@+id/share_info"
+        android:icon="@drawable/share_icon_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/share_info"
+        app:showAsAction="ifRoom"
+        android:enabled="false"/>
+    <item
         android:id="@+id/settingMenuItem"
         android:icon="@drawable/settings_icon"
         android:orderInCategory="1"

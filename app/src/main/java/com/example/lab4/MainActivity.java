@@ -4,14 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +30,8 @@ import android.widget.Toast;
 
 import com.example.lab4.databinding.ActivityMainBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
     int attemptsLeft = 0;
 
     int gameMode = 0;
+
+    MenuItem share;
+    MenuItem save;
+
+    Date currentDate;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     static final String STATE_NUMBER = "CompNum";
     static final String STATE_ATTEMPTS = "AttemptsLeft";
@@ -108,13 +122,88 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (item.getItemId() == R.id.share_info)
+        {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+
+            String resultMessage = getResources().getString(R.string.result_message);
+            String statusMessage = attemptsLeft == 0 ? getResources().getString(R.string.result_message_defeat)
+                    : getResources().getString(R.string.result_message_succesfully);
+
+            String guessNumMessage = getResources().getString(R.string.guess_num_message);
+            String attemptsLeftMessage = getResources().getString(R.string.attempts_left_message);
+
+            String message = guessNumMessage + " " + comp_num + " " + attemptsLeftMessage + " " + attemptsLeft + " " +
+                    resultMessage + " " + statusMessage;
+
+            sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+            sendIntent.setType("text/plain");
+
+            if (sendIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(sendIntent);
+            }
+        }
+
+        if (item.getItemId() == R.id.save_info)
+        {
+            Intent saveIntent = new Intent();
+            saveIntent.setPackage("com.google.android.keep");
+
+            String resultMessage = getResources().getString(R.string.result_message);
+            String statusMessage = attemptsLeft == 0 ? getResources().getString(R.string.result_message_defeat)
+                    : getResources().getString(R.string.result_message_succesfully);
+
+            String guessNumMessage = getResources().getString(R.string.guess_num_message);
+            String attemptsLeftMessage = getResources().getString(R.string.attempts_left_message);
+
+            String message = sdf.format(currentDate) + " " + guessNumMessage + " " + comp_num + " " + attemptsLeftMessage + " " + attemptsLeft + " " +
+                    resultMessage + " " + statusMessage;
+
+            saveIntent.putExtra(Intent.EXTRA_TEXT, message);
+            saveIntent.setType("text/plain");
+
+            if (saveIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(saveIntent);
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        share = menu.findItem(R.id.share_info);
+        save = menu.findItem(R.id.save_info);
         return true; //super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==R.id.copy_text) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("label", binding.numUserTxt.getText().toString());
+            clipboard.setPrimaryClip(clip);
+            String message = getResources().getString(R.string.copy_message);
+            showMessage(getApplicationContext(),message);
+        }
+
+        if (item.getItemId()==R.id.inset_text) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboard.hasPrimaryClip()) {
+                ClipData.Item item_data = clipboard.getPrimaryClip().getItemAt(0);
+                String pastedText = item_data.getText().toString();
+                binding.numUserTxt.setText(pastedText);
+            }
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.context_menu, menu);
     }
 
     @Override
@@ -128,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         binding.numUserTxt.setInputType(InputType.TYPE_NULL);
+        EditText editText = findViewById(R.id.num_user_txt);
+        registerForContextMenu(editText);
 
         attemptsLeft = 5;
         binding.hintShowTxt.setText(R.string.hint_show_str_2);
@@ -139,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
         binding.guessBtn.setText(R.string.guess_str);
         binding.guessBtn.setClickable(true);
         binding.numUserTxt.setText("");
+        share.setEnabled(false);
+        save.setEnabled(false);
 
         if (gameMode == 0)
         {
@@ -177,6 +270,8 @@ public class MainActivity extends AppCompatActivity {
                 binding.guessBtn.setText(R.string.guess_str);
                 binding.guessBtn.setClickable(true);
                 binding.numUserTxt.setText("");
+                share.setEnabled(false);
+                save.setEnabled(false);
 
                 if (which == 0)
                 {
@@ -256,6 +351,9 @@ public class MainActivity extends AppCompatActivity {
                 binding.guessBtn.setClickable(false);
                 String message = getResources().getString(R.string.wishYou);
                 showMessage(context, message);
+                share.setEnabled(true);
+                save.setEnabled(true);
+                currentDate = new Date();
                 return;
             }
             else if (number < comp_num) binding.hintShowTxt.setText(R.string.hint_more);
@@ -271,6 +369,9 @@ public class MainActivity extends AppCompatActivity {
         {
             binding.hintShowTxt.setText(R.string.defeat);
             binding.guessBtn.setClickable(false);
+            share.setEnabled(true);
+            save.setEnabled(true);
+            currentDate = new Date();
             String message = getResources().getString(R.string.defeat);
             showMessage(context, message + " " + comp_num);
         }
