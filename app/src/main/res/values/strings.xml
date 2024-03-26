@@ -41,4 +41,8 @@
     <string name="player_name_string">Введите имя игрока</string>
     <string name="player_name">Имя игрока</string>
     <string name="player_name_show">Суперигрок</string>
+    <string name="empty_string_msg">Пустая строка!</string>
+    <string name="error_notification_msg">Невозможно отправить уведомление!</string>
+    <string name="error_permission_notification">Вы не дали права на отправку уведомлений!</string>
+    <string name="error_change_name">Имя пользователя можно изменить только в начале игры!</string>
 </resources>

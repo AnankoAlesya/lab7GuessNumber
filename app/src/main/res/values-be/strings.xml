@@ -18,7 +18,7 @@
     <string name="hint_show_str_4">Задуман чатырохзначны лік.</string>
     <string name="clear">Ачысціць</string>
     <string name="aboutDeveloper">Аб распрацоўшчыку</string>
-    <string name="settingsMenu">" Наладкі"</string>
+    <string name="settingsMenu">Наладкі</string>
     <string name="about_me">Пра мяне</string>
     <string name="full_name">Коназ Вера Рыгораўна</string>
     <string name="date_of_birth">Дата нараджэння: 27.05.2004</string>
@@ -37,4 +37,8 @@
     <string name="player_name_string">Увядзіце імя гульца</string>
     <string name="player_name">Імя гульца</string>
     <string name="player_name_show">Супергулец</string>
+    <string name="empty_string_msg">Пусты радок!</string>
+    <string name="error_notification_msg">Немагчыма адправіць апавяшчэнне!</string>
+    <string name="error_permission_notification">Вы не далі права на адпраўку апавяшчэнняў!</string>
+    <string name="error_change_name">" Імя гульца можна змяніць толькі ў пачатку гульні!"</string>
 </resources>

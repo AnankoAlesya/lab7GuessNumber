@@ -1,14 +1,27 @@
 package com.example.lab4;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -34,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     int gameMode = 0;
 
+    boolean isWin = false;
+
     MenuItem share;
 
     MenuItem save;
@@ -45,8 +60,15 @@ public class MainActivity extends AppCompatActivity {
     static final String STATE_ATTEMPTS = "AttemptsLeft";
     static final String STATE_GAME_MODE = "GameMode";
     static final String STATE_MESSAGE_TXT = "HintShowTxt";
+    static final String STATE_PLAYER_NAME = "PlayerName";
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName() + "1";
+
+    private static final int NOTIFY_ID = 101;
+    private static final String CHANNEL_ID = "GuessChannel";
+    private static final String CHANNEL_NAME = "Guess notification channel";
+    private static final int PERMISSION_REQUEST_CODE = 1001;
+
 
     @Override
     protected void onDestroy() {
@@ -72,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(STATE_ATTEMPTS, attemptsLeft);
         outState.putInt(STATE_GAME_MODE, gameMode);
         outState.putString(STATE_MESSAGE_TXT, binding.hintShowTxt.getText().toString());
+        outState.putString(STATE_PLAYER_NAME, binding.playerNameShow.getText().toString());
+
         super.onSaveInstanceState(outState);
         Log.i(LOG_TAG, "Save");
     }
@@ -84,8 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
         binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
         binding.hintShowTxt.setText(savedInstanceState.getString(STATE_MESSAGE_TXT));
+        binding.playerNameShow.setText(savedInstanceState.getString(STATE_PLAYER_NAME));
 
-        if (attemptsLeft == 0) binding.guessBtn.setClickable(false);
+        if (attemptsLeft == 0 || isWin) {
+            binding.guessBtn.setClickable(false);
+        }
+
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -105,16 +133,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.settingMenuItem) openWindowChooseGameMode();
 
-        if (item.getItemId() == R.id.aboutMenuItem)
-        {
+        if (item.getItemId() == R.id.aboutMenuItem) {
             Intent intent = new Intent(MainActivity.this, AboutActivity.class);
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
             }
         }
 
-        if (item.getItemId() == R.id.share_info)
-        {
+        if (item.getItemId() == R.id.share_info) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
 
@@ -136,8 +162,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (item.getItemId() == R.id.save_info)
-        {
+        if (item.getItemId() == R.id.save_info) {
             Intent saveIntent = new Intent();
             saveIntent.setPackage("com.google.android.keep");
 
@@ -167,13 +192,18 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         share = menu.findItem(R.id.share_info);
         save = menu.findItem(R.id.save_info);
+
+        if (attemptsLeft == 0 || isWin) {
+            share.setEnabled(true);
+            save.setEnabled(true);
+        }
+
+        Log.i(LOG_TAG, "Menu");
         return true; //super.onCreateOptionsMenu(menu);
     }
 
-    public boolean checkNumbers(String symbols)
-    {
-        for (int i = 0; i < symbols.length(); i++)
-        {
+    public boolean checkNumbers(String symbols) {
+        for (int i = 0; i < symbols.length(); i++) {
             if (!Character.isDigit(symbols.charAt(i))) return false;
         }
 
@@ -223,14 +253,34 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.num_user_txt);
         registerForContextMenu(editText);
 
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            String playerName = data.getStringExtra("playerName");
+                            binding.playerNameShow.setText(playerName);
+                        }
+                    }
+                }
+        );
+
         binding.playerNameShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PlayerName.class);
-
-                if (intent.resolveActivity(getPackageManager()) != null)
+                if ((gameMode == 0 && attemptsLeft < 5) || (gameMode == 1 && attemptsLeft < 7) || (gameMode == 2 && attemptsLeft < 10))
                 {
-                    startActivity(intent);
+                    showMessage(getResources().getString(R.string.error_change_name));
+                    return;
+                }
+
+                Intent intent = new Intent(MainActivity.this, PlayerNameActivity.class);
+                intent.putExtra("playerName", binding.playerNameShow.getText().toString());
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    activityResultLauncher.launch(intent);
                 }
             }
         });
@@ -238,7 +288,9 @@ public class MainActivity extends AppCompatActivity {
         attemptsLeft = 5;
         binding.hintShowTxt.setText(R.string.hint_show_str_2);
         comp_num = GuessNum.rndCompNum(10, 99);
-        Log.i (LOG_TAG, "Угадай число.onCreate()");
+        createNotificationChannel();
+
+        Log.i(LOG_TAG, "Угадай число.onCreate()");
     }
 
     public void restart(View view) {
@@ -247,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startNewGame(int gameMode) {
         binding.guessBtn.setText(R.string.guess_str);
+        binding.playerNameShow.setText(R.string.player_name_show);
         binding.numUserTxt.setText("");
 
         binding.guessBtn.setClickable(true);
@@ -268,10 +321,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         binding.attemptsLeftTxt.setText(Integer.toString(attemptsLeft));
+        isWin = false;
     }
 
-    public void showMessage(String message)
-    {
+    public void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
@@ -324,22 +377,21 @@ public class MainActivity extends AppCompatActivity {
 
         int number = Integer.parseInt(binding.numUserTxt.getText().toString());
 
-        if (attemptsLeft > 0)
-        {
-            if (number == comp_num)
-            {
+        if (attemptsLeft > 0) {
+            if (number == comp_num) {
                 binding.guessBtn.setText(R.string.guessed_str);
                 binding.guessBtn.setClickable(false);
 
                 String message = getResources().getString(R.string.wishYou);
+                SendNotification(message);
                 showMessage(message);
                 share.setEnabled(true);
                 save.setEnabled(true);
 
                 currentDate = new Date();
+                isWin = true;
                 return;
-            }
-            else if (number < comp_num) binding.hintShowTxt.setText(R.string.hint_more);
+            } else if (number < comp_num) binding.hintShowTxt.setText(R.string.hint_more);
             else binding.hintShowTxt.setText(R.string.hint_less);
 
             attemptsLeft--;
@@ -348,8 +400,7 @@ public class MainActivity extends AppCompatActivity {
             binding.numUserTxt.selectAll();
         }
 
-        if (attemptsLeft == 0)
-        {
+        if (attemptsLeft == 0) {
             binding.hintShowTxt.setText(R.string.defeat);
             binding.guessBtn.setClickable(false);
             share.setEnabled(true);
@@ -357,7 +408,48 @@ public class MainActivity extends AppCompatActivity {
 
             currentDate = new Date();
             String message = getResources().getString(R.string.defeat);
+            SendNotification(message);
             showMessage(message + " " + comp_num);
+        }
+    }
+
+    public void SendNotification(String textContent) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle(getResources().getString(R.string.result_message))
+                .setContentText(textContent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(Notification.DEFAULT_ALL);
+
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(MainActivity.this);
+
+        notificationManager.cancelAll();
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_CODE);
+            return;
+        }
+        notificationManager.notify(NOTIFY_ID, builder.build());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                return;
+            } else {
+                showMessage(getResources().getString(R.string.error_permission_notification));
+            }
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

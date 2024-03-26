@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,8 +13,9 @@
         android:theme="@style/Theme.Lab4"
         tools:targetApi="31">
         <activity
-            android:name=".PlayerName"
-            android:exported="false" />
+            android:name=".PlayerNameActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".AboutActivity"
             android:exported="false" />
