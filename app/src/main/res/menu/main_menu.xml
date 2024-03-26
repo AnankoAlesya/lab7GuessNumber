@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/save_info"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:enabled="false"/>
     <item
         android:id="@+id/share_info"
@@ -15,14 +15,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/share_info"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:enabled="false"/>
     <item
         android:id="@+id/settingMenuItem"
         android:icon="@drawable/settings_icon"
         android:orderInCategory="1"
         android:title="@string/settingsMenu"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/aboutMenuItem"
         android:orderInCategory="2"

@@ -10,7 +10,7 @@
         android:title="@string/copy_text"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/inset_text"
+        android:id="@+id/insert_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orderInCategory="2"
