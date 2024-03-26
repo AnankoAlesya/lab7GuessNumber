@@ -33,4 +33,8 @@
     <string name="result_message_succesfully">Вы выйгралі!</string>
     <string name="result_message_defeat">Вы прайгралі!</string>
     <string name="save_info">Захаваць</string>
+    <string name="incorret_data">Няправільныя дадзеныя!</string>
+    <string name="player_name_string">Увядзіце імя гульца</string>
+    <string name="player_name">Імя гульца</string>
+    <string name="player_name_show">Супергулец</string>
 </resources>

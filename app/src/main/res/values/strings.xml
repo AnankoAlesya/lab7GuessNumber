@@ -37,4 +37,8 @@
     <string name="result_message_succesfully">Вы выйграли!</string>
     <string name="result_message_defeat">Вы пройграли!</string>
     <string name="save_info">Сохранить</string>
+    <string name="incorret_data">Неправильные данные!</string>
+    <string name="player_name_string">Введите имя игрока</string>
+    <string name="player_name">Имя игрока</string>
+    <string name="player_name_show">Суперигрок</string>
 </resources>

@@ -170,6 +170,16 @@ public class MainActivity extends AppCompatActivity {
         return true; //super.onCreateOptionsMenu(menu);
     }
 
+    public boolean checkNumbers(String symbols)
+    {
+        for (int i = 0; i < symbols.length(); i++)
+        {
+            if (!Character.isDigit(symbols.charAt(i))) return false;
+        }
+
+        return true;
+    }
+
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.copy_text) {
@@ -185,7 +195,9 @@ public class MainActivity extends AppCompatActivity {
             if (clipboard.hasPrimaryClip()) {
                 ClipData.Item item_data = clipboard.getPrimaryClip().getItemAt(0);
                 String pastedText = item_data.getText().toString();
-                binding.numUserTxt.setText(pastedText);
+
+                if (checkNumbers(pastedText)) binding.numUserTxt.setText(pastedText);
+                else showMessage(getResources().getString(R.string.incorret_data));
             }
         }
         return super.onContextItemSelected(item);
@@ -210,6 +222,18 @@ public class MainActivity extends AppCompatActivity {
         binding.numUserTxt.setInputType(InputType.TYPE_NULL);
         EditText editText = findViewById(R.id.num_user_txt);
         registerForContextMenu(editText);
+
+        binding.playerNameShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PlayerName.class);
+
+                if (intent.resolveActivity(getPackageManager()) != null)
+                {
+                    startActivity(intent);
+                }
+            }
+        });
 
         attemptsLeft = 5;
         binding.hintShowTxt.setText(R.string.hint_show_str_2);
