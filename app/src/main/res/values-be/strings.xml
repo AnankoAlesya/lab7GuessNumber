@@ -41,4 +41,5 @@
     <string name="error_notification_msg">Немагчыма адправіць апавяшчэнне!</string>
     <string name="error_permission_notification">Вы не далі права на адпраўку апавяшчэнняў!</string>
     <string name="error_change_name">" Імя гульца можна змяніць толькі ў пачатку гульні!"</string>
+    <string name="error_message_google_keep">Не ўстаноўлена прыкладанне Google Keep!</string>
 </resources>

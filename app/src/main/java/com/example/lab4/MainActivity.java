@@ -182,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
             if (saveIntent.resolveActivity(getPackageManager()) != null) {
                 startActivity(saveIntent);
             }
+            else
+            {
+                showMessage(getResources().getString(R.string.error_message_google_keep));
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -427,8 +431,8 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.cancelAll();
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_CODE);
-            return;
         }
+
         notificationManager.notify(NOTIFY_ID, builder.build());
     }
 
@@ -437,7 +441,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                return;
+                String message = !isWin ? getResources().getString(R.string.defeat) :
+                        getResources().getString(R.string.wishYou);
+
+                SendNotification(message);
             } else {
                 showMessage(getResources().getString(R.string.error_permission_notification));
             }
