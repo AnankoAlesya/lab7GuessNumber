@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(STATE_GAME_MODE, gameMode);
         outState.putString(STATE_MESSAGE_TXT, binding.hintShowTxt.getText().toString());
         outState.putString(STATE_PLAYER_NAME, binding.playerNameShow.getText().toString());
-
         super.onSaveInstanceState(outState);
         Log.i(LOG_TAG, "Save");
     }
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        /*
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -295,6 +294,8 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
 
         Log.i(LOG_TAG, "Угадай число.onCreate()");
+
+         */
     }
 
     public void restart(View view) {
