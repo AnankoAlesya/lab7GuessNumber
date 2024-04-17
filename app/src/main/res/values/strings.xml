@@ -35,7 +35,7 @@
     <string name="guess_num_message">Загаданное число:</string>
     <string name="result_message">Результат:</string>
     <string name="result_message_succesfully">Вы выйграли!</string>
-    <string name="result_message_defeat">Вы пройграли!</string>
+    <string name="result_message_defeat">Вы проиграли!</string>
     <string name="save_info">Сохранить</string>
     <string name="incorret_data">Неправильные данные!</string>
     <string name="player_name_string">Введите имя игрока</string>
@@ -46,6 +46,4 @@
     <string name="error_permission_notification">Вы не дали права на отправку уведомлений!</string>
     <string name="error_change_name">Имя пользователя можно изменить только в начале игры!</string>
     <string name="error_message_google_keep">Не установлено приложение Google Keep!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,47 +1,33 @@
 package com.example.lab4;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChangeUserNameFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.lab4.databinding.FragmentChangeUserNameBinding;
+
 public class ChangeUserNameFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String ARG_PLAYER_NAME = "PlayerName";
+    private String playerName;
+    private FragmentChangeUserNameBinding binding;
 
     public ChangeUserNameFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangeUserNameFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChangeUserNameFragment newInstance(String param1, String param2) {
+    
+    public static ChangeUserNameFragment newInstance(String playerName) {
         ChangeUserNameFragment fragment = new ChangeUserNameFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PLAYER_NAME, playerName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,15 +36,61 @@ public class ChangeUserNameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            playerName = getArguments().getString(ARG_PLAYER_NAME);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_user_name, container, false);
+        binding = FragmentChangeUserNameBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.playerNameEdit.setText(playerName);
+        binding.toolbar4.setNavigationIcon(R.drawable.navigation_icon);
+        binding.toolbar4.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
+
+        binding.toolbar4.setTitle(R.string.player_name);
+
+        binding.playerNameEdit.requestFocus();
+        showSoftKeyboard(binding.playerNameEdit);
+
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String playerName = binding.playerNameEdit.getText().toString().trim();
+                if (playerName.length() == 0)
+                {
+                    showMessage(getResources().getString(R.string.empty_string_msg));
+                    return;
+                }
+
+                Bundle result = new Bundle();
+                result.putString("PlayerName", playerName);
+                getParentFragmentManager().setFragmentResult("GetPlayerName", result);
+                getParentFragmentManager().popBackStack();
+            }
+        });
+    }
+
+    public void showSoftKeyboard(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = getActivity().getSystemService(InputMethodManager.class);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    public void showMessage(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
     }
 }

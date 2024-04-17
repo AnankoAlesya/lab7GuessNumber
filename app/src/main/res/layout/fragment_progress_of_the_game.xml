@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_purple"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ProgressOfTheGameFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -84,7 +84,6 @@
                 android:layout_columnWeight="1"
                 android:layout_marginEnd="15sp"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="1"
                 android:textSize="20sp" />
 
@@ -95,7 +94,6 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="2"
                 android:textSize="20sp" />
 
@@ -107,7 +105,6 @@
                 android:layout_columnWeight="1"
                 android:layout_marginStart="15sp"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="3"
                 android:textSize="20sp" />
 
@@ -119,7 +116,6 @@
                 android:layout_columnWeight="1"
                 android:layout_marginEnd="15sp"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="4"
                 android:textSize="20sp" />
 
@@ -130,7 +126,6 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="5"
                 android:textSize="20sp" />
 
@@ -142,7 +137,6 @@
                 android:layout_columnWeight="1"
                 android:layout_marginStart="15sp"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="6"
                 android:textSize="20sp" />
 
@@ -154,7 +148,6 @@
                 android:layout_columnWeight="1"
                 android:layout_marginEnd="15sp"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="7"
                 android:textSize="20sp" />
 
@@ -165,7 +158,6 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="8"
                 android:textSize="20sp" />
 
@@ -177,7 +169,6 @@
                 android:layout_columnWeight="1"
                 android:layout_marginStart="15sp"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="9"
                 android:textSize="20sp" />
 
@@ -189,7 +180,6 @@
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:fontFamily="sans-serif-black"
-                android:onClick="onClickNumber"
                 android:text="0"
                 android:textSize="20sp" />
         </GridLayout>
@@ -205,7 +195,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-black"
-                android:onClick="guess"
                 android:text="@string/guess_str"
                 android:textSize="20sp" />
 
@@ -215,16 +204,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-black"
-                android:onClick="restart"
                 android:text="@string/restart_str"
                 android:textSize="20sp" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/clear_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:onClick="clear"
             android:text="@string/clear"
             android:textSize="20sp" />
 
